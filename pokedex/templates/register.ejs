@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><%- title %></title>
+</head>
+<body>
+    <form action="<%- path %>" method="post" id="registerForm">
+        <fieldset>
+            <legend><h3><%- title %></h3></legend>
+            <label>Username: <input type="text" name="name"></label>
+            <label>Password: <input type="text" name="password"></label><br>
+            <label>Favorite Pokemon: <br></label><textarea rows="5" cols="50" name="favorites"></textarea>
+        </fieldset>
+        <input type="submit" value="Go">
+    </form>
+    <hr>
+    <a href="/">BACK TO HOME</a>
+</body>
+</html>
