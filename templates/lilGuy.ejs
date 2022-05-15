@@ -1,21 +1,57 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title><%- guy %></title>
+<!--    <link rel="stylesheet" href="style.css" type="text/css">-->
+
+    <style>
+        @font-face {
+            font-family: 'Pokemon Solid';
+            src: url("Pokemon Solid.ttf") format('truetype');
+        }
+        @font-face {
+            font-family: 'Pokemon Hollow';
+            src: url("Pokemon Hollow.ttf") format('truetype');
+        }
+        body {
+            background-image: url("pokemonbkgd.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-size: 24px;
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+        .header2 {
+            font-size: 2rem;
+            font-family: 'Pokemon Solid', sans-serif;
+            color: yellow;
+            -webkit-text-stroke: 1px black;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 0.4rem;
+        }
+        .ul-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-    <h1><%- guy %></h1>
+    <div class="header2"><%- guy %></div>
     <p>Type(s): <%- types %></p>
     <h3>Stats:</h3>
-    <ul>
-        <%- stats %>
-    </ul>
+    <div class="ul-container">
+        <ul>
+            <%- stats %>
+        </ul>
+    </div>
     <h3>Abilities:</h3>
     <ul>
         <%- abilities %>
     </ul>
     <hr>
-    <a href="/">BACK TO HOME</a>
+    <a href="/"><div class="bubbly-button">BACK TO HOME</div></a>
 </body>
 </html>

@@ -95,7 +95,7 @@ app.post("/queryResults", async function(request, response) {
         })
         args = {
             name: result.name,
-            password: result.password,
+            password: "that's illegal",
             favs: list
         }
         // console.log(args)
@@ -103,8 +103,6 @@ app.post("/queryResults", async function(request, response) {
     } catch (e) {
         console.error(e)
     } finally {}
-    
-    
 })
 
 app.get("/updateInfo", function(request, response) {
@@ -118,6 +116,7 @@ app.post("/confirmUpdate", async function(request, response) {
         await updateInfo(name, password, favorites.split(','))
     } catch(e) {
         console.error(e)
+        /* need to reroute user to register page instead */
     } finally {}
     response.render("confirmRegister", (await findUser(name)))
 })
