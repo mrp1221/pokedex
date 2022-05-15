@@ -85,7 +85,7 @@ app.post("/queryResults", async function(request, response) {
     var list = ""
     try {
         result = await findUser(query)
-        console.log(`NAME = ${result.name}`)
+        // console.log(`NAME = ${result.name}`)
         result.favs.forEach((fav) => {
             list += `<li><a href="/pokemon/${fav}">${fav}</a></li>`
         })
@@ -94,7 +94,7 @@ app.post("/queryResults", async function(request, response) {
             password: result.password,
             favs: list
         }
-        console.log(args)
+        // console.log(args)
         response.render("confirmRegister", args)
     } catch (e) {
         console.error(e)
@@ -136,9 +136,8 @@ app.post("/completeClear", async function(request, response) {
 app.get("/pokemon/:guy", function(request, response) {
     const guy = request.params.guy
     let url = `https://pokeapi.co/api/v2/pokemon/${guy}`
-    console.log("AXIOS: ")
-    axios.get(url).then(res => console.log(res.data)).catch(error => {
-        console.error(error)
+    axios.get(url).then(res => console.log(res.data.abilities)).catch(error => {
+        //console.error(error)
     })
     response.render("index")
 })
@@ -164,8 +163,8 @@ async function findUser(query) {
         console.error(e)
     } finally {
         await client.close()
-        console.log(result)
-        console.log(typeof result.favs)
+        // console.log(result)
+        // console.log(typeof result.favs)
         return result
     }
 }
@@ -181,7 +180,7 @@ async function updateInfo(username, password, newFavs) {
         console.error(e)
     } finally {
         await client.close()
-        console.log(result)
+        // console.log(result)
         return result
     }
 }
