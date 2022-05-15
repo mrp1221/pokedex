@@ -115,11 +115,21 @@ app.get("/updateInfo", function(request, response) {
 app.post("/confirmUpdate", async function(request, response) {
     let {name, password, favorites} = request.body
     try {
-        await updateInfo(name, password, favorites.split(','))
+        await updateInfo(name, password, favorites.replace(/\s/g,'').split(','))
     } catch(e) {
         console.error(e)
     } finally {}
-    response.render("confirmRegister", (await findUser(name)))
+    let user = await findUser(name)
+    let newFavs = ""
+    user.favs.forEach((fav) => {
+        newFavs += `<li><a href=/pokemon/${fav}>${fav}</a></li>`
+    })
+    let args = {
+        name: user.name,
+        password: user.password,
+        favs: newFavs
+    }
+    response.render("confirmRegister", args)
 })
 
 app.get("/clear", function(request, response) {
