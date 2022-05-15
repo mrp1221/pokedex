@@ -34,6 +34,12 @@ body {
     font-weight: bold;
     letter-spacing: 0.4rem;
 }
+.text {
+    font-size: 1em;
+    font-family: "Pokemon Solid", sans-serif;
+    color: black;
+    letter-spacing: 0.4rem;
+}
 
 .form-box {
     background: rgba(255, 255, 0, 0.5);
@@ -59,7 +65,7 @@ label {
     font-size: 1rem;
     letter-spacing: 0.5rem;
 }
-input[type=text], textarea {
+input[type=text], textarea, li, .uiandpw {
     font-family: "Ink Free", sans-serif;
     font-size: 1em;
     letter-spacing: 0.5rem;

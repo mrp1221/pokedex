@@ -8,9 +8,14 @@
 <body>
     <div class="header2">Your Information:</div>
     <div class="form-box">
-        <strong>Your Username: </strong><%- name %><br>
-        <strong>Your Password: </strong><%- password %> (dont tell anyone)<br>
-        <strong>Your Favorite Pokemon: </strong><br>
+        <strong><div class="text">Your Username: </div> </strong>
+        <div class="uiandpw"><%- name %></div>
+        <br>
+        <strong><div class="text">Your Password: </div></strong>
+        <div class="uiandpw"><%- password %> (dont tell anyone)</div>
+        <br>
+        <strong><div class="text">Your Favorite Pokemon: </div></strong>
+        <br>
         <div class="ul-container">
             <ul>
                 <%- favs %>
