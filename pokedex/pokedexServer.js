@@ -133,13 +133,34 @@ app.post("/completeClear", async function(request, response) {
     }
 })
 
-app.get("/pokemon/:guy", function(request, response) {
+app.get("/pokemon/:guy", async function(request, response) {
     const guy = request.params.guy
     let url = `https://pokeapi.co/api/v2/pokemon/${guy}`
-    axios.get(url).then(res => console.log(res.data.abilities)).catch(error => {
+    var result;
+    await axios.get(url).then(res => result = res.data).catch(error => {
         //console.error(error)
     })
-    response.render("index")
+    //console.log(result)
+    let name = result.name
+    var types = []
+    result.types.forEach((type) => {
+        types.push(type.type.name)
+    })
+    var stats = ""
+    result.stats.forEach((stat) => {
+        stats += `<li>${stat.stat.name} (${stat.base_stat} base)</li>`
+    })
+    var abilities = ""
+    result.abilities.forEach((ability) => {
+        abilities += `<li>${ability.ability.name}</li>`
+    })
+    let args = {
+        guy: name,
+        types: types,
+        stats: stats,
+        abilities: abilities
+    }
+    response.render("lilGuy", args)
 })
 
 async function insertUser(user) {
