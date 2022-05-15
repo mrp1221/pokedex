@@ -37,9 +37,9 @@ function cmdLine() {
 
 let app = express()
 
-app.set("views", path.resolve(__dirname, "../templates"))
+app.set("views", path.resolve(__dirname, "templates"))
 app.set("view engine", "ejs")
-app.use(express.static(path.join(__dirname, '../templates')));
+app.use(express.static(path.join(__dirname, 'templates')));
 app.use(bodyParser.urlencoded({extended:false}))
 
 
