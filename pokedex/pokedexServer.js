@@ -10,7 +10,7 @@ const rl = readline.createInterface({
     output: process.stdout,
 })
 
-require("dotenv").config({ path: path.resolve(__dirname, "credentials/.env") })
+require("dotenv").config({ path: path.resolve(__dirname, "../credentials/.env") })
 
 const username = process.env.MONGO_DB_USERNAME
 const password = process.env.MONGO_DB_PASSWORD
@@ -33,8 +33,9 @@ function cmdLine() {
 
 let app = express()
 
-app.set("views", path.resolve(__dirname, "templates"))
+app.set("views", path.resolve(__dirname, "../templates"))
 app.set("view engine", "ejs")
+app.use(express.static(path.join(__dirname, '../templates')));
 app.use(bodyParser.urlencoded({extended:false}))
 
 
@@ -198,6 +199,6 @@ async function clearDB() {
 let port = 5000
 http.createServer(app).listen(port)
 
-console.log(`Server started at port ${port}`)
+console.log(`Server started at http://localhost:${port}/`)
 cmdLine()
 

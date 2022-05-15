@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<script>
+	var animateButton = function(e) {
+
+		e.preventDefault;
+		//reset animation
+		e.target.classList.remove('animate');
+
+		e.target.classList.add('animate');
+		setTimeout(function(){
+			e.target.classList.remove('animate');
+		},700);
+	};
+
+	var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+	for (var i = 0; i < bubblyButtons.length; i++) {
+		bubblyButtons[i].addEventListener('click', animateButton, false);
+	}
+</script>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Pokedex</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div class="header">
+		Welcome to the Pokedex!
+	</div>
+	<a href="/register"><button class="bubbly-button">Register</button></a>
+	<br>
+	<a href="/lookup"><button class="bubbly-button">Search Users</button></a>
+	<br>
+	<a href="/updateInfo"><button class="bubbly-button">Update Information</button></a>
+</body>
+
+</html>

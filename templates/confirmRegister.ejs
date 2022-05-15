@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header2">Your Information:</div>
+    <div class="form-box">
+        <strong>Your Username: </strong><%- name %><br>
+        <strong>Your Password: </strong><%- password %> (dont tell anyone)<br>
+        <strong>Your Favorite Pokemon: </strong><br>
+        <div class="ul-container">
+            <ul>
+                <%- favs %>
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <a href="/"><div class="bubbly-button">BACK TO HOME</div></a>
+</body>
+</html>
