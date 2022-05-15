@@ -15,6 +15,7 @@
         "express": "^4.17.3",
         "http": "^0.0.1-security",
         "mongodb": "^4.5.0",
+        "node-fetch": "^2.6.7",
         "nodemon": "^2.0.15"
     }
 }

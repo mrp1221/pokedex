@@ -1,9 +1,12 @@
 let http = require("http")
+let http2 = require("https")
 let path = require("path")
 let express = require("express")
 let readline = require("readline")
 let bodyParser = require("body-parser")
 let axios = require("axios")
+
+const fetch = require("node-fetch")
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -16,6 +19,7 @@ const username = process.env.MONGO_DB_USERNAME
 const password = process.env.MONGO_DB_PASSWORD
 const databaseAndCollection = {db: "pokedex", collection: "users"}
 const {MongoClient, ServerApiVersion} = require("mongodb")
+const { https } = require("follow-redirects")
 
 const uri = `mongodb+srv://${username}:${password}@cluster0.txqvu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -55,7 +59,7 @@ app.post("/confirmRegister", function(request, response) {
     let user = {
         name: name,
         password: password,
-        favs: favorites.split(',')
+        favs: favorites.replace(/\s/g,'').split(',')
     }
     favorites.split(',').forEach((fav) => {
         favs += `<li ${style}><a href="/pokemon/${fav}">${fav}</a></li>`
@@ -134,34 +138,51 @@ app.post("/completeClear", async function(request, response) {
 })
 
 app.get("/pokemon/:guy", async function(request, response) {
-    const guy = request.params.guy
-    let url = `https://pokeapi.co/api/v2/pokemon/${guy}`
-    var result;
-    await axios.get(url).then(res => result = res.data).catch(error => {
-        //console.error(error)
-    })
-    //console.log(result)
-    let name = result.name
-    var types = []
-    result.types.forEach((type) => {
-        types.push(type.type.name)
-    })
-    var stats = ""
-    result.stats.forEach((stat) => {
-        stats += `<li>${stat.stat.name} (${stat.base_stat} base)</li>`
-    })
-    var abilities = ""
-    result.abilities.forEach((ability) => {
-        abilities += `<li>${ability.ability.name}</li>`
-    })
-    let args = {
-        guy: name,
-        types: types,
-        stats: stats,
-        abilities: abilities
+    try {
+        const guy = request.params.guy
+        let url = `https://pokeapi.co/api/v2/pokemon/${guy}`
+        var result;
+        // await axios.get(url).then(res => result = res.data).catch(error => {
+        //     console.error(error)
+        // })
+
+        result = await query(url)
+        console.log(result)
+
+        let name = request.params.guy
+        var types = []
+        result.types.forEach((type) => {
+            types.push(type.type.name)
+        })
+        var stats = ""
+        result.stats.forEach((stat) => {
+            stats += `<li>${stat.stat.name} (${stat.base_stat} base)</li>`
+        })
+        var abilities = ""
+        result.abilities.forEach((ability) => {
+            abilities += `<li>${ability.ability.name}</li>`
+        })
+        let args = {
+            guy: name,
+            types: types,
+            stats: stats,
+            abilities: abilities
+        }
+        response.render("lilGuy", args)
+    } catch (e) {
+        console.error(e)
     }
-    response.render("lilGuy", args)
 })
+
+async function query(url) {
+    try {
+        var result
+        await fetch(url).then(res => res.json()).then(json => {result = json}).catch(err => {console.error(`ERROR: ${err}`)})
+        return result
+    } catch (e) {
+        console.error(e)
+    }
+}
 
 async function insertUser(user) {
     try {
