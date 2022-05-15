@@ -61,7 +61,7 @@ app.post("/confirmRegister", function(request, response) {
         password: password,
         favs: favorites.replace(/\s/g,'').split(',')
     }
-    favorites.split(',').forEach((fav) => {
+    favorites.replace(/\s/g,'').split(',').forEach((fav) => {
         favs += `<li ${style}><a href="/pokemon/${fav}">${fav}</a></li>`
     })
     let args = {
