@@ -48,7 +48,8 @@ app.get("/", function(request, response) {
 })
 
 app.get("/register", function(request, response) {
-    let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
+    // let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
+    let arg= {title: "Register", path: `http://localhost:5000/`}
     response.render("register", arg)
 })
 
@@ -78,7 +79,8 @@ app.post("/confirmRegister", function(request, response) {
 })
 
 app.get("/lookup", function(request, response) {
-    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
+    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
+    let arg = {path: `http://localhost:5000/`}
     response.render("lookup", arg)
 })
 
@@ -106,7 +108,8 @@ app.post("/queryResults", async function(request, response) {
 })
 
 app.get("/updateInfo", function(request, response) {
-    let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
+    // let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
+    let arg = {title: "Update Info", path: `http://localhost:5000/`}
     response.render("register", arg)
 })
 
@@ -132,7 +135,8 @@ app.post("/confirmUpdate", async function(request, response) {
 })
 
 app.get("/clear", function(request, response) {
-    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
+    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
+    let arg = {path: `http://localhost:5000/`}
     response.render("clear", arg)
 })
 
@@ -246,11 +250,16 @@ async function clearDB() {
 }
 
 // let port = parseInt(process.argv[2])
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 8000;
-}
-app.listen(port);
+// let port = process.env.PORT;
+// if (port == null || port == "") {
+//     port = 8000;
+// }
+// app.listen(port);
+
+let port = 5000
+http.createServer(app).listen(port)
+
+console.log("The server is running at http://localhost:5000/")
 
 cmdLine()
 
