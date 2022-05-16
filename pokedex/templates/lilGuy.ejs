@@ -3,19 +3,148 @@
 <head>
     <meta charset="utf-8">
     <title><%- guy %></title>
+    <style>
+        body {
+            background: linear-gradient(rgba(121,201,250,1) 35%, rgba(252,251,247,1) 55%, rgba(125,173,113,1) 100%) no-repeat;
+            background-size: cover;
+            font-size: 24px;
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+        .header2 {
+            font-size: 4rem;
+            font-family: "Segoe Script", sans-serif;
+            color: yellow;
+            -webkit-text-stroke: 0.5px black;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 0.4rem;
+            padding: 1rem;
+        }
+        .text0 {
+            font-size: 2em;
+            font-family: "Ink Free", sans-serif;
+            color: black;
+            letter-spacing: 0.4rem;
+            padding-top: 1rem;
+        }
+        .text {
+            font-size: 1em;
+            font-family: "Ink Free", sans-serif;
+            color: black;
+        }
+        .ul-container {
+            display: flex;
+            justify-content: center;
+        }
+        ul {
+            margin: 0.5rem;
+        }
+        li {
+            font-family: "Ink Free", sans-serif;
+            font-size: 1em;
+            letter-spacing: 0.5rem;
+        }
+        /* shamelessly stolen from https://webdeasy.de/en/top-css-buttons-en/ */
+        .bubbly-button {
+            font-family: 'Segoe Script', sans-serif;
+            display: inline-block;
+            font-size: 1em;
+            letter-spacing: 0.2rem;
+            padding: 1em 1em;
+            margin-top: 50px;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: #ff0;
+            color: black;
+            border-radius: 3rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.5);
+        }
+        .bubbly-button:focus {
+            outline: 0;
+        }
+        .bubbly-button:before, .bubbly-button:after {
+            position: absolute;
+            content: '';
+            display: block;
+            width: 140%;
+            height: 100%;
+            left: -20%;
+            z-index: -1000;
+            transition: all ease-in-out 0.5s;
+            background-repeat: no-repeat;
+        }
+        .bubbly-button:before {
+            display: none;
+            top: -75%;
+            background-image: radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, transparent 20%, #ff0 20%, transparent 30%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0 15%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%);
+            background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+        }
+        .bubbly-button:after {
+            display: none;
+            bottom: -75%;
+            background-image: radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0 15%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%), radial-gradient(circle, #ff0 20%, transparent 20%);
+            background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+        }
+        .bubbly-button:active {
+            transform: scale(0.9);
+            background-color: #e6e600;
+            box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+        }
+        .bubbly-button.animate:before {
+            display: block;
+            animation: topBubbles ease-in-out 0.75s forwards;
+        }
+        .bubbly-button.animate:after {
+            display: block;
+            animation: bottomBubbles ease-in-out 0.75s forwards;
+        }
+        @keyframes topBubbles {
+            0% {
+                background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+            }
+            50% {
+                background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+            }
+            100% {
+                background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+        @keyframes bottomBubbles {
+            0% {
+                background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+            }
+            50% {
+                background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+            }
+            100% {
+                background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1><%- guy %></h1>
-    <p>Type(s): <%- types %></p>
-    <h3>Stats:</h3>
-    <ul>
-        <%- stats %>
-    </ul>
-    <h3>Abilities:</h3>
-    <ul>
-        <%- abilities %>
-    </ul>
+    <div class="header2"><%- guy %></div>
+    <div class="text">Type(s): <%- types %></div>
+    <div class="text0">Stats:</div>
+    <div class="ul-container">
+        <ul>
+            <%- stats %>
+        </ul>
+    </div>
+    <div class="text0">Abilities:</div>
+    <div class="ul-container">
+        <ul>
+            <%- abilities %>
+        </ul>
+    </div>
     <hr>
-    <a href="/">BACK TO HOME</a>
+    <a href="/"><div class="bubbly-button">BACK TO HOME</div></a>
 </body>
 </html>

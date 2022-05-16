@@ -55,6 +55,9 @@ body {
     display: flex;
     justify-content: center;
 }
+ul {
+    margin: 0.5rem;
+}
 
 fieldset {
     border: none;
