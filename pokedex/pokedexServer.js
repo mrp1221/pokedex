@@ -246,8 +246,11 @@ async function clearDB() {
 }
 
 // let port = parseInt(process.argv[2])
-let port = 5000
-http.createServer(app).listen(port)
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 8000;
+}
+app.listen(port);
 
 console.log(`Server started at http://localhost:${port}/`)
 cmdLine()
