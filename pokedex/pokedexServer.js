@@ -271,7 +271,6 @@ async function clearDB() {
     } finally { }
 }
 
-let port = parseInt(process.argv[2])
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 8000;
