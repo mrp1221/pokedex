@@ -91,7 +91,8 @@ app.post("/queryResults", async function(request, response) {
     var list = ""
     try {
         if (await findUser(query) === null) {
-            response.render("lookup", {path: "http://localhost:5000/queryResults"})
+            // response.render("lookup", {path: "http://localhost:5000/queryResults"})
+            response.render("lookup", {path: `https://limitless-gorge-32733.herokuapp.com/queryResults`})
         } else {
             result = await findUser(query)
             // console.log(`NAME = ${result.name}`)
