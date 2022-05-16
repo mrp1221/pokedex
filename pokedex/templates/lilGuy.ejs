@@ -33,6 +33,15 @@
             font-family: "Ink Free", sans-serif;
             color: black;
         }
+        .box {
+            background: rgba(255, 255, 0, 0.5);
+            border: black 1px solid;
+            border-radius: 3rem;
+            max-width: 40%;
+            padding: 1rem;
+            margin: 0 auto;
+            text-align: center;
+        }
         .ul-container {
             display: flex;
             justify-content: center;
@@ -131,18 +140,20 @@
 </head>
 <body>
     <div class="header2"><%- guy %></div>
-    <div class="text">Type(s): <%- types %></div>
-    <div class="text0">Stats:</div>
-    <div class="ul-container">
-        <ul>
-            <%- stats %>
-        </ul>
-    </div>
-    <div class="text0">Abilities:</div>
-    <div class="ul-container">
-        <ul>
-            <%- abilities %>
-        </ul>
+    <div class="box">
+        <div class="text">Type(s): <%- types %></div>
+        <div class="text0">Stats:</div>
+        <div class="ul-container">
+            <ul>
+                <%- stats %>
+            </ul>
+        </div>
+        <div class="text0">Abilities:</div>
+        <div class="ul-container">
+            <ul>
+                <%- abilities %>
+            </ul>
+        </div>
     </div>
     <hr>
     <a href="/"><div class="bubbly-button">BACK TO HOME</div></a>

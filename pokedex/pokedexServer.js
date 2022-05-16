@@ -48,7 +48,7 @@ app.get("/", function(request, response) {
 })
 
 app.get("/register", function(request, response) {
-    let arg = { title: "Register", path: `http://localhost:${port}/confirmRegister` }
+    let arg = { title: "Register", path: `https://we-love-pokemon.netlify.app/confirmRegister` }
     response.render("register", arg)
 })
 
@@ -78,7 +78,7 @@ app.post("/confirmRegister", function(request, response) {
 })
 
 app.get("/lookup", function(request, response) {
-    let arg = { path: `http://localhost:${port}/queryResults` }
+    let arg = { path: `https://we-love-pokemon.netlify.app/queryResults` }
     response.render("lookup", arg)
 })
 
@@ -106,7 +106,7 @@ app.post("/queryResults", async function(request, response) {
 })
 
 app.get("/updateInfo", function(request, response) {
-    let arg = { title: "Update Info", path: `http://localhost:${port}/confirmUpdate` }
+    let arg = { title: "Update Info", path: `https://we-love-pokemon.netlify.app/confirmUpdate` }
     response.render("register", arg)
 })
 
@@ -132,7 +132,7 @@ app.post("/confirmUpdate", async function(request, response) {
 })
 
 app.get("/clear", function(request, response) {
-    let arg = { path: `http://localhost:${port}/completeClear` }
+    let arg = { path: `https://we-love-pokemon.netlify.app/completeClear` }
     response.render("clear", arg)
 })
 
@@ -246,9 +246,9 @@ async function clearDB() {
 }
 
 // let port = parseInt(process.argv[2])
-let port = 5000
-http.createServer(app).listen(port)
-
-console.log(`Server started at http://localhost:${port}/`)
-cmdLine()
+// let port = 5000
+// http.createServer(app).listen(port)
+//
+// console.log(`Server started at http://localhost:${port}/`)
+// cmdLine()
 
