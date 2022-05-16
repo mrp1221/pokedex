@@ -80,7 +80,7 @@ app.post("/confirmRegister", function(request, response) {
 
 app.get("/lookup", function(request, response) {
     // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
-    let arg = {path: `http://localhost:5000/`}
+    let arg = {path: `http://localhost:5000/queryResults`}
     response.render("lookup", arg)
 })
 
@@ -90,18 +90,22 @@ app.post("/queryResults", async function(request, response) {
     var args = null
     var list = ""
     try {
-        result = await findUser(query)
-        // console.log(`NAME = ${result.name}`)
-        result.favs.forEach((fav) => {
-            list += `<li><a href="/pokemon/${fav}">${fav}</a></li>`
-        })
-        args = {
-            name: result.name,
-            password: "that's illegal",
-            favs: list
+        if (await findUser(query) === null) {
+            response.render("lookup", {path: "http://localhost:5000/queryResults"})
+        } else {
+            result = await findUser(query)
+            // console.log(`NAME = ${result.name}`)
+            result.favs.forEach((fav) => {
+                list += `<li><a href="/pokemon/${fav}">${fav}</a></li>`
+            })
+            args = {
+                name: result.name,
+                password: "that's illegal",
+                favs: list
+            }
+            // console.log(args)
+            response.render("confirmRegister", args)
         }
-        // console.log(args)
-        response.render("confirmRegister", args)
     } catch (e) {
         console.error(e)
     } finally {}
@@ -109,7 +113,7 @@ app.post("/queryResults", async function(request, response) {
 
 app.get("/updateInfo", function(request, response) {
     // let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
-    let arg = {title: "Update Info", path: `http://localhost:5000/`}
+    let arg = {title: "Update Info", path: `http://localhost:5000/confirmUpdate`}
     response.render("register", arg)
 })
 
