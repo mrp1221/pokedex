@@ -48,7 +48,8 @@ app.get("/", function(request, response) {
 })
 
 app.get("/register", function(request, response) {
-    let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
+    // let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
+    let arg= {title: "Register", path: `http://localhost:5000/confirmRegister`}
     response.render("register", arg)
 })
 
@@ -78,7 +79,8 @@ app.post("/confirmRegister", function(request, response) {
 })
 
 app.get("/lookup", function(request, response) {
-    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
+    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
+    let arg = {path: `http://localhost:5000/queryResults`}
     response.render("lookup", arg)
 })
 
@@ -88,51 +90,61 @@ app.post("/queryResults", async function(request, response) {
     var args = null
     var list = ""
     try {
-        result = await findUser(query)
-        // console.log(`NAME = ${result.name}`)
-        result.favs.forEach((fav) => {
-            list += `<li><a href="/pokemon/${fav}">${fav}</a></li>`
-        })
-        args = {
-            name: result.name,
-            password: "that's illegal",
-            favs: list
+        if (await findUser(query) === null) {
+            response.render("lookup", {path: "http://localhost:5000/queryResults"})
+        } else {
+            result = await findUser(query)
+            // console.log(`NAME = ${result.name}`)
+            result.favs.forEach((fav) => {
+                list += `<li><a href="/pokemon/${fav}">${fav}</a></li>`
+            })
+            args = {
+                name: result.name,
+                password: "that's illegal",
+                favs: list
+            }
+            // console.log(args)
+            response.render("confirmRegister", args)
         }
-        // console.log(args)
-        response.render("confirmRegister", args)
     } catch (e) {
         console.error(e)
     } finally {}
 })
 
 app.get("/updateInfo", function(request, response) {
-    let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
+    // let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
+    let arg = {title: "Update Info", path: `http://localhost:5000/confirmUpdate`}
     response.render("register", arg)
 })
 
 app.post("/confirmUpdate", async function(request, response) {
     let {name, password, favorites} = request.body
     try {
-        await updateInfo(name, password, favorites.replace(/\s/g,'').split(','))
+        if (await findUser(name) === null || await loginUser(name, password) === null) {
+            response.render("register", {title:"Update Info", path: "http://localhost:5000/confirmUpdate"})
+        } else {
+            await updateInfo(name, password, favorites.replace(/\s/g,'').split(','))
+            let user = await findUser(name)
+            let newFavs = ""
+            user.favs.forEach((fav) => {
+                newFavs += `<li><a href=/pokemon/${fav}>${fav}</a></li>`
+            })
+            let args = {
+                name: user.name,
+                password: user.password,
+                favs: newFavs
+            }
+            response.render("confirmRegister", args)
+        }
     } catch(e) {
         console.error(e)
         /* need to reroute user to register page instead */
     } finally {}
-    let user = await findUser(name)
-    let newFavs = ""
-    user.favs.forEach((fav) => {
-        newFavs += `<li><a href=/pokemon/${fav}>${fav}</a></li>`
-    })
-    let args = {
-        name: user.name,
-        password: user.password,
-        favs: newFavs
-    }
-    response.render("confirmRegister", args)
 })
 
 app.get("/clear", function(request, response) {
-    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
+    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
+    let arg = {path: `http://localhost:5000/completeClear`}
     response.render("clear", arg)
 })
 
@@ -220,6 +232,20 @@ async function findUser(query) {
     }
 }
 
+async function loginUser(username, password) {
+    var result = null
+    try {
+        await client.connect()
+        let filter = { name: query, password: password }
+        result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne(filter)
+    } catch (e) {
+        console.error(e)
+    } finally {
+        await client.close()
+        return result
+    }
+}
+
 async function updateInfo(username, password, newFavs) {
     var result = null
     try {
@@ -246,11 +272,16 @@ async function clearDB() {
 }
 
 // let port = parseInt(process.argv[2])
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 8000;
-}
-app.listen(port);
+// let port = process.env.PORT;
+// if (port == null || port == "") {
+//     port = 8000;
+// }
+// app.listen(port);
+
+let port = 5000
+http.createServer(app).listen(port)
+
+console.log("The server is running at http://localhost:5000/")
 
 cmdLine()
 
