@@ -48,8 +48,8 @@ app.get("/", function(request, response) {
 })
 
 app.get("/register", function(request, response) {
-    // let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
-    let arg= {title: "Register", path: `http://localhost:5000/confirmRegister`}
+    let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
+    // let arg= {title: "Register", path: `http://localhost:5000/confirmRegister`}
     response.render("register", arg)
 })
 
@@ -79,8 +79,8 @@ app.post("/confirmRegister", function(request, response) {
 })
 
 app.get("/lookup", function(request, response) {
-    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
-    let arg = {path: `http://localhost:5000/queryResults`}
+    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/queryResults` }
+    // let arg = {path: `http://localhost:5000/queryResults`}
     response.render("lookup", arg)
 })
 
@@ -112,8 +112,8 @@ app.post("/queryResults", async function(request, response) {
 })
 
 app.get("/updateInfo", function(request, response) {
-    // let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
-    let arg = {title: "Update Info", path: `http://localhost:5000/confirmUpdate`}
+    let arg = { title: "Update Info", path: `https://limitless-gorge-32733.herokuapp.com/confirmUpdate` }
+    // let arg = {title: "Update Info", path: `http://localhost:5000/confirmUpdate`}
     response.render("register", arg)
 })
 
@@ -143,8 +143,8 @@ app.post("/confirmUpdate", async function(request, response) {
 })
 
 app.get("/clear", function(request, response) {
-    // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
-    let arg = {path: `http://localhost:5000/completeClear`}
+    let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
+    // let arg = {path: `http://localhost:5000/completeClear`}
     response.render("clear", arg)
 })
 
