@@ -49,7 +49,7 @@ app.get("/", function(request, response) {
 
 app.get("/register", function(request, response) {
     // let arg = { title: "Register", path: `https://limitless-gorge-32733.herokuapp.com/confirmRegister` }
-    let arg= {title: "Register", path: `http://localhost:5000/`}
+    let arg= {title: "Register", path: `http://localhost:5000/confirmRegister`}
     response.render("register", arg)
 })
 
@@ -120,27 +120,31 @@ app.get("/updateInfo", function(request, response) {
 app.post("/confirmUpdate", async function(request, response) {
     let {name, password, favorites} = request.body
     try {
-        await updateInfo(name, password, favorites.replace(/\s/g,'').split(','))
+        if (await findUser(name) === null || await loginUser(name, password) === null) {
+            response.render("register", {title:"Update Info", path: "http://localhost:5000/confirmUpdate"})
+        } else {
+            await updateInfo(name, password, favorites.replace(/\s/g,'').split(','))
+            let user = await findUser(name)
+            let newFavs = ""
+            user.favs.forEach((fav) => {
+                newFavs += `<li><a href=/pokemon/${fav}>${fav}</a></li>`
+            })
+            let args = {
+                name: user.name,
+                password: user.password,
+                favs: newFavs
+            }
+            response.render("confirmRegister", args)
+        }
     } catch(e) {
         console.error(e)
         /* need to reroute user to register page instead */
     } finally {}
-    let user = await findUser(name)
-    let newFavs = ""
-    user.favs.forEach((fav) => {
-        newFavs += `<li><a href=/pokemon/${fav}>${fav}</a></li>`
-    })
-    let args = {
-        name: user.name,
-        password: user.password,
-        favs: newFavs
-    }
-    response.render("confirmRegister", args)
 })
 
 app.get("/clear", function(request, response) {
     // let arg = { path: `https://limitless-gorge-32733.herokuapp.com/completeClear` }
-    let arg = {path: `http://localhost:5000/`}
+    let arg = {path: `http://localhost:5000/completeClear`}
     response.render("clear", arg)
 })
 
@@ -224,6 +228,20 @@ async function findUser(query) {
         await client.close()
         // console.log(result)
         // console.log(typeof result.favs)
+        return result
+    }
+}
+
+async function loginUser(username, password) {
+    var result = null
+    try {
+        await client.connect()
+        let filter = { name: query, password: password }
+        result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).findOne(filter)
+    } catch (e) {
+        console.error(e)
+    } finally {
+        await client.close()
         return result
     }
 }
