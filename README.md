@@ -1,6 +1,6 @@
 # The Pokedex Project
 
-<b>Team Members:</b> Matthew Pohlhaus & Stephanie Shutter
+<b>Team Members:</b> Matthew Pohlhaus & Stephanie Shutter (id: 117011302)
 <br>
 <b>App Description:</b> Do you like Pokemon? Use our app to track your favorite Pokemon and find out their information, including their type, stats, and abilities!
 <br>
